@@ -85,6 +85,62 @@ app.get("/login", async (req, res) => {
     return res.json(error.stack);
   }
 });
+
+app.get("/getprofile", async (req, res) => {
+  let customer_id = { customer_id: req.body.customer_id };
+  await mongoose.connect("mongodb://localhost:27017/ecom");
+  let result_find = await CustomersModel.findOne(customer_id);
+  let data = req.body;
+  const schema = {
+    type: "object",
+    properties: {
+      customer_id: { type: "string", minLength: 1 },
+      name: { type: "string" },
+      subname: { type: "string" },
+      username: { type: "string" },
+      password: { type: "string" },
+    },
+    required: ["customer_id"],
+  };
+  const validate = ajv.compile(schema);
+  const valid = validate(data);
+  let valiableError = [];
+  if (!valid) {
+    validate.errors.forEach((element) => {
+      switch (element.keyword) {
+        case "required":
+          valiableError.push(
+            element.params.missingProperty.replace("/", ""),
+            element.message
+          );
+          break;
+        case "minLength":
+          valiableError.push(
+            element.instancePath.replace("/", ""),
+            element.message
+          );
+          break;
+        default:
+          valiableError.push(element);
+      }
+    });
+    return res.json({
+      message: "params incorrect or missing",
+      "error decsc": valiableError,
+    });
+  }
+  if (result_find) {
+    return res.json({
+      name: result_find.name,
+      subname: result_find.subname,
+      username: result_find.username,
+    });
+  } else {
+    res.set(400);
+    return res.json({ error: "data not found" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
