@@ -7,5 +7,6 @@ const Customers = new mongoose.Schema({
   username: { type: String },
   password: { type: String },
 });
+Customers.set("versionKey", false);
 const collectionName = "Customers";
 module.exports = mongoose.model(collectionName, Customers);

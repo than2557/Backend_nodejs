@@ -3,6 +3,7 @@ const app = express();
 const port = 5005;
 const mongoose = require("mongoose");
 const CustomersModel = require("./model/Customers.model");
+const productModel = require("./model/product.model");
 
 const { v4: uuidv4 } = require("uuid");
 const cors = require("cors");
@@ -25,6 +26,38 @@ app.post("/register", async (req, res) => {
     return res.json(error.stack);
   }
 });
+app.post("/createProduct", async (req, res) => {
+  try {
+    let data = req.body;
+    console.log(data);
+    data.product_id = uuidv4();
+    await mongoose.connect("mongodb://localhost:27017/ecom");
+    await productModel.create(data);
+    return res.json({ message: "create product Success" });
+  } catch (error) {
+    return res.json(error.stack);
+  }
+});
+
+app.get("/getproduct", async (req, res) => {
+  try {
+    if (Object.keys(req.body).length > 0) {
+      let data = req.body;
+      console.log(data);
+
+      await mongoose.connect("mongodb://localhost:27017/ecom");
+      let result = await productModel.find(data);
+      return res.json(result);
+    } else {
+      await mongoose.connect("mongodb://localhost:27017/ecom");
+      let result = await productModel.find({});
+      return res.json(result);
+    }
+  } catch (error) {
+    return res.json(error.stack);
+  }
+});
+
 app.get("/login", async (req, res) => {
   try {
     let data = req.body;
