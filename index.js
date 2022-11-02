@@ -23,11 +23,13 @@ app.post("/register", async (req, res) => {
     await mongoose.connect("mongodb://localhost:27017/ecom");
 
     let userdata = await CustomersModel.findOne({ username: data.username });
-
-    if (userdata.username === data.username) {
-      res.status(400);
-      return res.json({ message: "username is been used" });
+    if (userdata) {
+      if (userdata.username === data.username) {
+        res.status(400);
+        return res.json({ message: "username is been used" });
+      }
     }
+
     await CustomersModel.create(data);
     return res.json({ message: "register Success" });
   } catch (error) {
