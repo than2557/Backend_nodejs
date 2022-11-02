@@ -4,7 +4,7 @@ const port = 5005;
 const mongoose = require("mongoose");
 const CustomersModel = require("./model/Customers.model");
 const productModel = require("./model/product.model");
-
+const order = require("./model/orders.model");
 const { v4: uuidv4 } = require("uuid");
 const cors = require("cors");
 const Ajv = require("ajv");
@@ -26,6 +26,34 @@ app.post("/register", async (req, res) => {
     return res.json(error.stack);
   }
 });
+
+app.post("/order", async (req, res) => {
+  try {
+    let body = req.body;
+
+    body.Order_id = uuidv4();
+    body.Order_date = new Date();
+    body.statustOrder = "N";
+
+    await mongoose.connect("mongodb://localhost:27017/ecom");
+    await order.create(body);
+    return res.json(body);
+  } catch (error) {
+    return res.json(error);
+  }
+});
+
+app.get("/getOrder", async (req, res) => {
+  try {
+    let orderId = req.body.Order_id;
+    await mongoose.connect("mongodb://localhost:27017/ecom");
+    let result = await order.findOne({ Order_id: orderId });
+    return res.json(result);
+  } catch (err) {
+    return res.json(err);
+  }
+});
+
 app.post("/createProduct", async (req, res) => {
   try {
     let data = req.body;
