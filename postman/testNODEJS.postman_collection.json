@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "a2b02c5d-d8e3-4338-8e61-c4ac7c1d1d67",
+		"name": "testNODEJS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22101895"
+	},
+	"item": [
+		{
+			"name": "register",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"ประทาน\",\r\n    \"subname\":\"โพธิ์ภู่\",\r\n    \"username\":\"thanagen47\",\r\n    \"password\":\"1150\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/register",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "testname",
+							"disabled": true
+						},
+						{
+							"key": "subname",
+							"value": "testsubname",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "\"5plus4=10",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"thanagen47\",\"password\":\"1150\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getprofile",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"customer_id\":\"24ba8cd5-478d-4a25-adfe-d5e952c1b422\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/getprofile",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"getprofile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_name\":\"ถุงเท้า\",\r\n    \"product_detail\":\"ถุงเท้ารุ่น พิเศษ\",\r\n    \"qty\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/createProduct",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"createProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getproduct",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"product_id\":\"e3946ec1-67ba-48ff-854f-737e196c99b1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/getproduct",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"getproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"customer_id\":\"24ba8cd5-478d-4a25-adfe-d5e952c1b422\",\r\n\"listOrder\":[\r\n    {\"product_id\":\"e3946ec1-67ba-48ff-854f-737e196c99b1\",\"qty\": 1},\r\n    {\"product_id\":\"f64011cc-818e-4154-a418-f07fabdba08a\",\"qty\":1}\r\n],\r\n\"statustOrder\":\"N\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/order",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrder",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Order_id\":\"b2d843d1-8d05-4a70-b8b4-098c891cf5a2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/getOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"getOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel order",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Order_id\":\"b2d843d1-8d05-4a70-b8b4-098c891cf5a2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5005/cancelOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"cancelOrder"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

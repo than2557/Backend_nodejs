@@ -19,7 +19,15 @@ app.post("/register", async (req, res) => {
     let data = req.body;
     console.log(data);
     data.customer_id = uuidv4();
+
     await mongoose.connect("mongodb://localhost:27017/ecom");
+
+    let userdata = await CustomersModel.findOne({ username: data.username });
+
+    if (userdata.username === data.username) {
+      res.status(400);
+      return res.json({ message: "username is been used" });
+    }
     await CustomersModel.create(data);
     return res.json({ message: "register Success" });
   } catch (error) {
@@ -37,6 +45,16 @@ app.post("/order", async (req, res) => {
 
     await mongoose.connect("mongodb://localhost:27017/ecom");
     await order.create(body);
+    let listOrder = body.listOrder;
+    listOrder.forEach(async (element) => {
+      let product_id = element.product_id;
+      let productData = await productModel.findOne({ product_id: product_id });
+      let NewQty = productData.qty - element.qty;
+      await productModel.updateOne(
+        { product_id: product_id },
+        { $set: { qty: NewQty } }
+      );
+    });
     return res.json(body);
   } catch (error) {
     return res.json(error);
@@ -51,6 +69,20 @@ app.get("/getOrder", async (req, res) => {
     return res.json(result);
   } catch (err) {
     return res.json(err);
+  }
+});
+
+app.patch("/cancelOrder", async (req, res) => {
+  try {
+    let orderId = req.body.Order_id;
+    await mongoose.connect("mongodb://localhost:27017/ecom");
+    let result = await order.updateOne(
+      { Order_id: orderId },
+      { $set: { statustOrder: "F" } }
+    );
+    return res.json(result);
+  } catch (error) {
+    return res.json(error);
   }
 });
 
